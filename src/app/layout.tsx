@@ -30,6 +30,11 @@ const proximaNova = localFont({
       weight: '600',
       style: 'normal',
     },
+    {
+      path: './fonts/proximanova-bold.otf',
+      weight: '700',
+      style: 'normal',
+    },
   ],
   display: 'swap',
   variable: '--font-proxima-nova',

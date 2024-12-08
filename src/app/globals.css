@@ -5,7 +5,7 @@
 :root {
   --background: #ededed;
   --navbar: #ffe600;
-  --foreground: #000000e6;
+  --foreground: rgba(0, 0, 0, 0.9);
   --link: #3483fa;
   --nav-link: rgba(0, 0, 0, 0.9);
   --nav-link-hover: rgba(51, 51, 51, 0.9);
@@ -14,6 +14,9 @@
   --btn-primary-hover: #2968c8;
   --btn-secondary: rgba(65, 137, 230, 0.15);
   --btn-secondary-hover: rgba(65, 137, 230, 0.2);
+  --price: #000;
+  --price-discounted: rgba(0, 0, 0, 0.55);
+  --price-offer: #00a650;
 }
 
 @media (prefers-color-scheme: dark) {
