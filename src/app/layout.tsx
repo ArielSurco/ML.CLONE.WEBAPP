@@ -1,20 +1,61 @@
 import type { Metadata } from 'next'
-
-import './globals.css'
-
+import localFont from 'next/font/local'
 import Image from 'next/image'
 import Link from 'next/link'
 import { type ReactNode } from 'react'
 
-import { IoIosSearch } from 'react-icons/io'
+import { BsCart2 } from 'react-icons/bs'
 import { PiMapPinThin } from 'react-icons/pi'
 
-import { Input } from '@/shared/components/input'
+import { NavLink } from '@/layout/components/nav-link'
+import { SearchBar } from '@/layout/components/search-bar'
+
+import './globals.css'
+
+// Define the fonts with different weights
+const proximaNova = localFont({
+  src: [
+    {
+      path: './fonts/proximanova-light.woff2',
+      weight: '300',
+      style: 'normal',
+    },
+    {
+      path: './fonts/proximanova-regular.woff2',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: './fonts/proximanova-semibold.woff2',
+      weight: '600',
+      style: 'normal',
+    },
+  ],
+  display: 'swap',
+  variable: '--font-proxima-nova',
+})
 
 export const metadata: Metadata = {
   title: 'Mercado Libre Clone',
   description: 'Mercado Libre Clone',
 }
+
+const middleLinks = [
+  { href: '/', label: 'Categorías' },
+  { href: '/', label: 'Ofertas' },
+  { href: '/', label: 'Cupones' },
+  { href: '/', label: 'Supermercado' },
+  { href: '/', label: 'Moda' },
+  { href: '/', label: 'Mercado Play' },
+  { href: '/', label: 'Vender' },
+  { href: '/', label: 'Ayuda' },
+]
+
+const rightLinks = [
+  { href: '/', label: 'Creá tu cuenta' },
+  { href: '/', label: 'Ingresá' },
+  { href: '/', label: 'Mis compras' },
+]
 
 export default function RootLayout({
   children,
@@ -23,24 +64,18 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body>
+      <body className={`${proximaNova.variable} font-proxima-nova`}>
         <header className='flex h-fit w-full min-w-fit justify-center bg-navbar p-[10px]'>
           <div className='grid max-w-[1200px] grid-cols-[162px_minmax(340px,_588px)_minmax(350px,_390px)] grid-rows-[40px_1fr] gap-x-5 gap-y-3'>
-            <Image
-              alt='Mercado Libre'
-              height={34}
-              src='https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_25years_v2.png'
-              width={134}
-            />
-            <form className='group relative flex h-10 items-center'>
-              <Input className='h-10 py-[10px] pe-16 ps-4' name='search' />
-              <button
-                className='absolute right-0 top-0 flex h-10 w-12 items-center justify-center bg-transparent'
-                type='submit'
-              >
-                <IoIosSearch className='w-full border-l' color='#666' size={20} />
-              </button>
-            </form>
+            <Link href='/'>
+              <Image
+                alt='Logo'
+                height={34}
+                src='https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo_large_25years_v2.png'
+                width={134}
+              />
+            </Link>
+            <SearchBar />
             <Image
               alt='Offer'
               className='justify-self-end'
@@ -58,8 +93,23 @@ export default function RootLayout({
                 <span className='text-sm leading-none'>Dirección X</span>
               </div>
             </Link>
-            <div>categories</div>
-            <div>Login</div>
+            <div className='flex h-5 flex-wrap gap-4 self-end overflow-y-hidden'>
+              {middleLinks.map(({ href, label }) => (
+                <NavLink href={href} key={label}>
+                  {label}
+                </NavLink>
+              ))}
+            </div>
+            <div className='flex items-baseline justify-end gap-4 self-end'>
+              {rightLinks.map(({ href, label }) => (
+                <NavLink href={href} key={label}>
+                  {label}
+                </NavLink>
+              ))}
+              <NavLink href='/'>
+                <BsCart2 size={18} />
+              </NavLink>
+            </div>
           </div>
         </header>
         {children}
