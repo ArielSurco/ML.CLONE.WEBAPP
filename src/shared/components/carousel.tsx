@@ -13,6 +13,7 @@ import {
   type KeyboardEvent,
 } from 'react'
 
+import Autoplay from 'embla-carousel-autoplay'
 import useEmblaCarousel, { type UseEmblaCarouselType } from 'embla-carousel-react'
 import { SlArrowLeft, SlArrowRight } from 'react-icons/sl'
 
@@ -53,14 +54,20 @@ function useCarousel() {
   return context
 }
 
-const Carousel = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement> & CarouselProps>(
-  ({ orientation = 'horizontal', opts, setApi, plugins, className, children, ...props }, ref) => {
+const Carousel = forwardRef<
+  HTMLDivElement,
+  HTMLAttributes<HTMLDivElement> & Omit<CarouselProps, 'plugins'> & { autoplay?: boolean }
+>(
+  (
+    { orientation = 'horizontal', opts, setApi, className, children, autoplay = false, ...props },
+    ref,
+  ) => {
     const [carouselRef, api] = useEmblaCarousel(
       {
         ...opts,
         axis: orientation === 'horizontal' ? 'x' : 'y',
       },
-      plugins,
+      [Autoplay({ active: autoplay })],
     )
 
     const [canScrollPrev, setCanScrollPrev] = useState(false)
@@ -239,4 +246,60 @@ const CarouselNext = forwardRef<HTMLButtonElement, ComponentProps<typeof Button>
 
 CarouselNext.displayName = 'CarouselNext'
 
-export { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious, type CarouselApi }
+const CarouselDots = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    const { api } = useCarousel()
+    const [selectedIndex, setSelectedIndex] = useState(0)
+    const [slideCount, setSlideCount] = useState(0)
+
+    useEffect(() => {
+      if (!api) return
+
+      setSlideCount(api.scrollSnapList().length)
+
+      const onSelect = () => {
+        setSelectedIndex(api.selectedScrollSnap())
+      }
+
+      api.on('select', onSelect)
+      // Initialize
+      onSelect()
+
+      return () => {
+        api.off('select', onSelect)
+      }
+    }, [api])
+
+    return (
+      <div
+        className={cn('absolute flex w-full justify-center gap-1', className)}
+        ref={ref}
+        {...props}
+      >
+        {Array.from({ length: slideCount }).map((_, index) => (
+          <button
+            aria-label={`Go to slide ${String(index + 1)}`}
+            className={cn(
+              'h-[6px] w-[6px] rounded-full border border-white transition-all',
+              selectedIndex === index ? 'bg-white' : 'bg-black bg-opacity-25',
+            )}
+            key={index}
+            onClick={() => api?.scrollTo(index)}
+          />
+        ))}
+      </div>
+    )
+  },
+)
+
+CarouselDots.displayName = 'CarouselDots'
+
+export {
+  Carousel,
+  CarouselContent,
+  CarouselDots,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+  type CarouselApi,
+}
