@@ -3,9 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
+  --background: #ededed;
   --navbar: #ffe600;
   --foreground: #000000e6;
+  --link: #3483fa;
+  --selection: rgba(0, 0, 0, 0.1);
 }
 
 @media (prefers-color-scheme: dark) {
