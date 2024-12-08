@@ -10,6 +10,10 @@
   --nav-link: rgba(0, 0, 0, 0.9);
   --nav-link-hover: rgba(51, 51, 51, 0.9);
   --selection: rgba(0, 0, 0, 0.1);
+  --btn-primary: #3483fa;
+  --btn-primary-hover: #2968c8;
+  --btn-secondary: rgba(65, 137, 230, 0.15);
+  --btn-secondary-hover: rgba(65, 137, 230, 0.2);
 }
 
 @media (prefers-color-scheme: dark) {

@@ -1,83 +1,43 @@
 import Image from 'next/image'
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from '@/shared/components/carousel'
+
+const slidesImages = [
+  'https://http2.mlstatic.com/D_NQ_954980-MLA80897095780_122024-OO.webp',
+  'https://http2.mlstatic.com/D_NQ_921186-MLA81163355469_122024-OO.webp',
+  'https://http2.mlstatic.com/D_NQ_844495-MLA81214170443_122024-OO.webp',
+  'https://http2.mlstatic.com/D_NQ_861319-MLA80897927976_122024-OO.webp',
+  'https://http2.mlstatic.com/D_NQ_934578-MLA81214194351_122024-OO.webp',
+  'https://http2.mlstatic.com/D_NQ_775994-MLA81216428047_122024-OO.webp',
+]
+
 export default function Home() {
   return (
-    <div className='grid min-h-screen grid-rows-[20px_1fr_20px] items-center justify-items-center gap-16 p-8 pb-20 font-[family-name:var(--font-geist-sans)] sm:p-20'>
-      <main className='row-start-2 flex flex-col items-center gap-8 sm:items-start'>
-        <Image
-          alt='Next.js logo'
-          className='dark:invert'
-          height={38}
-          priority
-          src='/next.svg'
-          width={180}
-        />
-        <ol className='list-inside list-decimal text-center font-[family-name:var(--font-geist-mono)] text-sm sm:text-left'>
-          <li className='mb-2'>
-            Get started by editing{' '}
-            <code className='rounded bg-black/[.05] px-1 py-0.5 font-semibold dark:bg-white/[.06]'>
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
-
-        <div className='flex flex-col items-center gap-4 sm:flex-row'>
-          <a
-            className='flex h-10 items-center justify-center gap-2 rounded-full border border-solid border-transparent bg-foreground px-4 text-sm text-background transition-colors hover:bg-[#383838] sm:h-12 sm:px-5 sm:text-base dark:hover:bg-[#ccc]'
-            href='https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-            rel='noopener noreferrer'
-            target='_blank'
-          >
-            <Image
-              alt='Vercel logomark'
-              className='dark:invert'
-              height={20}
-              src='/vercel.svg'
-              width={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className='flex h-10 items-center justify-center rounded-full border border-solid border-black/[.08] px-4 text-sm transition-colors hover:border-transparent hover:bg-[#f2f2f2] sm:h-12 sm:min-w-44 sm:px-5 sm:text-base dark:border-white/[.145] dark:hover:bg-[#1a1a1a]'
-            href='https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-            rel='noopener noreferrer'
-            target='_blank'
-          >
-            Read our docs
-          </a>
-        </div>
-      </main>
-      <footer className='row-start-3 flex flex-wrap items-center justify-center gap-6'>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          <Image alt='File icon' aria-hidden height={16} src='/file.svg' width={16} />
-          Learn
-        </a>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          <Image alt='Window icon' aria-hidden height={16} src='/window.svg' width={16} />
-          Examples
-        </a>
-        <a
-          className='flex items-center gap-2 hover:underline hover:underline-offset-4'
-          href='https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app'
-          rel='noopener noreferrer'
-          target='_blank'
-        >
-          <Image alt='Globe icon' aria-hidden height={16} src='/globe.svg' width={16} />
-          Go to nextjs.org →
-        </a>
-      </footer>
+    <div className='group flex justify-center'>
+      <Carousel className='w-full' opts={{ loop: true }}>
+        <CarouselContent className='h-[400px]'>
+          {slidesImages.map((image) => (
+            <CarouselItem key={image}>
+              <Image
+                alt='slide'
+                className='min-h-full w-full object-cover'
+                height={400}
+                src={image}
+                width={1200}
+              />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className='focus:border-btn-primary absolute left-0 top-[38%] h-16 w-10 -translate-y-1/2 justify-start rounded-l-none bg-white p-2 opacity-0 transition-opacity duration-300 focus:border focus:border-l-0 group-hover:opacity-100' />
+        <CarouselNext className='focus:border-btn-primary absolute right-0 top-[38%] h-16 w-10 -translate-y-1/2 justify-end rounded-r-none bg-white p-2 opacity-0 transition-opacity duration-100 focus:border focus:border-r-0 group-hover:opacity-100' />
+        <div className='absolute bottom-0 h-[120px] w-full bg-[linear-gradient(180deg,_transparent,_#ebebeb)]' />
+      </Carousel>
     </div>
   )
 }
