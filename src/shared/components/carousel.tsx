@@ -141,16 +141,16 @@ const Carousel = forwardRef<
 
     return (
       <CarouselContext.Provider value={contextValue}>
-        <div
+        <section
+          aria-label='carousel'
           aria-roledescription='carousel'
           className={cn('relative', className)}
           onKeyDownCapture={handleKeyDown}
           ref={ref}
-          role='region'
           {...props}
         >
           {children}
-        </div>
+        </section>
       </CarouselContext.Provider>
     )
   },
@@ -179,7 +179,6 @@ const CarouselItem = forwardRef<HTMLDivElement, HTMLAttributes<HTMLDivElement>>(
         aria-roledescription='slide'
         className={cn('min-w-0 shrink-0 grow-0 basis-full', className)}
         ref={ref}
-        role='group'
         {...props}
       />
     )
