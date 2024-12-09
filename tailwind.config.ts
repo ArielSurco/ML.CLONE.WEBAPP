@@ -8,6 +8,7 @@ const config: Config = {
     './src/layout/**/*.{js,ts,jsx,tsx,mdx}',
     './src/shared/**/*.{js,ts,jsx,tsx,mdx}',
     './src/home/**/*.{js,ts,jsx,tsx,mdx}',
+    './src/products/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
